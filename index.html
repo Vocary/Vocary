@@ -237,24 +237,56 @@
 .screenshot-carousel {
   position: relative;
   width: 100%;
-  max-width: 340px;
+  max-width: 1200px;
   height: 700px;
   margin: 0 auto 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 0 40px;
+}
+
+.carousel-track {
+  display: flex;
+  gap: 20px;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  cursor: grab;
+  user-select: none;
+}
+
+.carousel-track.dragging {
+  transition: none;
+  cursor: grabbing;
+}
+
+.carousel-slide {
+  flex: 0 0 340px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.3;
+  filter: blur(8px) brightness(0.6);
+  transition: opacity 0.4s ease, filter 0.4s ease;
+  transform: scale(0.9);
+}
+
+.carousel-slide.active {
+  opacity: 1;
+  filter: blur(0) brightness(1);
+  transform: scale(1);
+  flex: 0 0 360px;
 }
 
 .carousel-image {
-  position: absolute;
-  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: contain;
-  opacity: 0;
-  transition: opacity 1s ease;
   border-radius: 28px;
-}
-
-.carousel-image.active {
-  opacity: 1;
 }
 
   /* ── Features ── */
@@ -594,6 +626,16 @@
     }
     .desktop-only { display: none; }
     .mobile-only { display: block; }
+    .screenshot-carousel { 
+      height: 500px;
+      padding: 0 20px;
+    }
+    .carousel-slide {
+      flex: 0 0 280px;
+    }
+    .carousel-slide.active {
+      flex: 0 0 300px;
+    }
   }
 </style>
 </head>
@@ -650,17 +692,28 @@
   </div>
 </section>
 
- <!-- App Screenshot Carousel -->
-
+<!-- App Screenshot Carousel -->
 <div class="screenshot-carousel">
-
-  <img src="6.9-screenshot-1.png" class="carousel-image active">
-  <img src="6.9-screenshot-2.png" class="carousel-image">
-  <img src="6.9-screenshot-3.png" class="carousel-image">
-  <img src="6.9-screenshot-4.png" class="carousel-image">
-  <img src="6.9-screenshot-5.png" class="carousel-image">
-  <img src="6.9-screenshot-6.png" class="carousel-image">
-
+  <div class="carousel-track">
+    <div class="carousel-slide active">
+      <img src="6.9-screenshot-1.png" class="carousel-image" alt="Vocary Home Screen">
+    </div>
+    <div class="carousel-slide">
+      <img src="6.9-screenshot-2.png" class="carousel-image" alt="Vocary Add Word">
+    </div>
+    <div class="carousel-slide">
+      <img src="6.9-screenshot-3.png" class="carousel-image" alt="Vocary Practice">
+    </div>
+    <div class="carousel-slide">
+      <img src="6.9-screenshot-4.png" class="carousel-image" alt="Vocary Dictionary">
+    </div>
+    <div class="carousel-slide">
+      <img src="6.9-screenshot-5.png" class="carousel-image" alt="Vocary Word Details">
+    </div>
+    <div class="carousel-slide">
+      <img src="6.9-screenshot-6.png" class="carousel-image" alt="Vocary Profile">
+    </div>
+  </div>
 </div>
 
 <!-- Features -->
@@ -791,21 +844,88 @@ const observer = new IntersectionObserver((entries) => {
 reveals.forEach(el => observer.observe(el));
 
 
-// Screenshot carousel
-const screenshots = document.querySelectorAll('.carousel-image');
+// Carousel wheel effect with swipe
+const carouselTrack = document.querySelector('.carousel-track');
+const slides = document.querySelectorAll('.carousel-slide');
+let currentIndex = 0;
+let startX = 0;
+let isDragging = false;
 
-let currentScreenshot = 0;
+function updateCarousel() {
+  slides.forEach((slide, i) => {
+    slide.classList.remove('active');
+  });
+  slides[currentIndex].classList.add('active');
+  
+  const offset = -currentIndex * (360 + 20);
+  carouselTrack.style.transform = `translateX(calc(50vw - 180px + ${offset}px))`;
+}
 
-setInterval(() => {
+// Mouse events
+carouselTrack.addEventListener('mousedown', (e) => {
+  isDragging = true;
+  startX = e.clientX;
+  carouselTrack.classList.add('dragging');
+});
 
-  screenshots[currentScreenshot].classList.remove('active');
+document.addEventListener('mousemove', (e) => {
+  if (!isDragging) return;
+  
+  const diff = startX - e.clientX;
+  if (Math.abs(diff) > 50) {
+    if (diff > 0 && currentIndex < slides.length - 1) {
+      currentIndex++;
+      isDragging = false;
+      carouselTrack.classList.remove('dragging');
+      updateCarousel();
+    } else if (diff < 0 && currentIndex > 0) {
+      currentIndex--;
+      isDragging = false;
+      carouselTrack.classList.remove('dragging');
+      updateCarousel();
+    }
+  }
+});
 
-  currentScreenshot =
-    (currentScreenshot + 1) % screenshots.length;
+document.addEventListener('mouseup', () => {
+  isDragging = false;
+  carouselTrack.classList.remove('dragging');
+});
 
-  screenshots[currentScreenshot].classList.add('active');
+// Touch events for mobile
+carouselTrack.addEventListener('touchstart', (e) => {
+  startX = e.touches[0].clientX;
+  carouselTrack.classList.add('dragging');
+});
 
-}, 4500);
+carouselTrack.addEventListener('touchmove', (e) => {
+  const diff = startX - e.touches[0].clientX;
+  if (Math.abs(diff) > 50) {
+    if (diff > 0 && currentIndex < slides.length - 1) {
+      currentIndex++;
+      carouselTrack.classList.remove('dragging');
+      updateCarousel();
+    } else if (diff < 0 && currentIndex > 0) {
+      currentIndex--;
+      carouselTrack.classList.remove('dragging');
+      updateCarousel();
+    }
+  }
+});
+
+// Wheel scroll
+carouselTrack.addEventListener('wheel', (e) => {
+  e.preventDefault();
+  if (e.deltaY > 0 && currentIndex < slides.length - 1) {
+    currentIndex++;
+  } else if (e.deltaY < 0 && currentIndex > 0) {
+    currentIndex--;
+  }
+  updateCarousel();
+}, { passive: false });
+
+// Initial setup
+updateCarousel();
 
 </script>
 
