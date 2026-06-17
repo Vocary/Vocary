@@ -34,7 +34,6 @@
     overflow-x: hidden;
   }
 
-  /* ── Noise overlay ── */
   body::before {
     content: '';
     position: fixed;
@@ -45,7 +44,6 @@
     opacity: 0.4;
   }
 
-  /* ── Glow blobs ── */
   .blob {
     position: fixed;
     border-radius: 50%;
@@ -66,7 +64,6 @@
     bottom: 20%; left: -150px;
   }
 
-  /* ── Nav ── */
   nav {
     position: fixed;
     top: 0; left: 0; right: 0;
@@ -115,7 +112,6 @@
 
   .nav-cta:hover { opacity: 0.9; transform: translateY(-1px); }
 
-  /* ── Hero ── */
   .hero {
     position: relative;
     z-index: 1;
@@ -125,7 +121,7 @@
     align-items: center;
     justify-content: center;
     text-align: center;
-    padding: 120px 24px 80px;
+    padding: 120px 24px 60px;
   }
 
   .hero-badge {
@@ -232,64 +228,163 @@
 
   .btn-ghost:hover { color: var(--text); }
 
-/* Screenshot Carousel */
+  /* ════════════════════════════════════════
+     SCREENSHOT CAROUSEL
+     Desktop: custom wheel w/ drag + blurred sides
+     Mobile: native scroll-snap, no custom drag JS
+     ════════════════════════════════════════ */
 
-.screenshot-carousel {
-  position: relative;
-  width: 100%;
-  max-width: 1200px;
-  height: 700px;
-  margin: 0 auto 100px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  padding: 0 40px;
-}
+  .carousel-section {
+    position: relative;
+    z-index: 1;
+    margin: 0 auto 100px;
+    width: 100%;
+  }
 
-.carousel-track {
-  display: flex;
-  gap: 20px;
-  height: 100%;
-  align-items: center;
-  justify-content: center;
-  transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  cursor: grab;
-  user-select: none;
-}
+  .carousel-mobile { display: none; }
 
-.carousel-track.dragging {
-  transition: none;
-  cursor: grabbing;
-}
+  .wheel-viewport {
+    position: relative;
+    width: 100%;
+    max-width: 980px;
+    margin: 0 auto;
+    height: 460px;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 14%, black 86%, transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0%, black 14%, black 86%, transparent 100%);
+  }
 
-.carousel-slide {
-  flex: 0 0 340px;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0.3;
-  filter: blur(8px) brightness(0.6);
-  transition: opacity 0.4s ease, filter 0.4s ease;
-  transform: scale(0.9);
-}
+  .wheel-track {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    margin-left: -110px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    cursor: grab;
+    will-change: transform;
+  }
 
-.carousel-slide.active {
-  opacity: 1;
-  filter: blur(0) brightness(1);
-  transform: scale(1);
-  flex: 0 0 360px;
-}
+  .wheel-track.dragging { cursor: grabbing; }
 
-.carousel-image {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  border-radius: 28px;
-}
+  .wheel-slide {
+    flex: 0 0 220px;
+    height: 420px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.35;
+    filter: blur(5px);
+    transform: scale(0.86);
+    transition: opacity 0.45s ease, filter 0.45s ease, transform 0.45s ease;
+    pointer-events: none;
+  }
 
-  /* ── Features ── */
+  .wheel-slide.active {
+    opacity: 1;
+    filter: blur(0);
+    transform: scale(1);
+  }
+
+  .wheel-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 32px;
+    -webkit-user-drag: none;
+    user-select: none;
+  }
+
+  .wheel-nav {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 28px;
+  }
+
+  .wheel-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--subtle);
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s, width 0.3s;
+    padding: 0;
+  }
+
+  .wheel-dot.active {
+    background: var(--green);
+    width: 18px;
+    border-radius: 3px;
+  }
+
+  @media (max-width: 768px) {
+    .carousel-desktop { display: none; }
+    .carousel-mobile { display: block; }
+    .carousel-section { margin-bottom: 60px; }
+
+    .snap-scroller {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      gap: 14px;
+      padding: 0 30% 16px;
+      scrollbar-width: none;
+    }
+
+    .snap-scroller::-webkit-scrollbar { display: none; }
+
+    .snap-slide {
+      flex: 0 0 58vw;
+      max-width: 220px;
+      scroll-snap-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0.4;
+      filter: blur(4px);
+      transform: scale(0.92);
+      transition: opacity 0.3s ease, filter 0.3s ease, transform 0.3s ease;
+    }
+
+    .snap-slide.active {
+      opacity: 1;
+      filter: blur(0);
+      transform: scale(1);
+    }
+
+    .snap-slide img {
+      width: 100%;
+      border-radius: 22px;
+      display: block;
+    }
+
+    .snap-dots {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      margin-top: 18px;
+    }
+
+    .snap-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--subtle);
+      transition: background 0.3s, width 0.3s;
+    }
+
+    .snap-dot.active {
+      background: var(--green);
+      width: 16px;
+      border-radius: 3px;
+    }
+  }
+
   .features {
     position: relative;
     z-index: 1;
@@ -384,7 +479,6 @@
     line-height: 1.7;
   }
 
-  /* ── How it works ── */
   .how {
     position: relative;
     z-index: 1;
@@ -453,7 +547,6 @@
     line-height: 1.7;
   }
 
-  /* ── CTA ── */
   .cta {
     position: relative;
     z-index: 1;
@@ -525,7 +618,6 @@
   .btn-app-small { font-size: 10px; font-weight: 400; opacity: 0.6; }
   .btn-app-big { font-size: 15px; font-weight: 600; }
 
-  /* ── Footer ── */
   footer {
     position: relative;
     z-index: 1;
@@ -566,7 +658,6 @@
     color: var(--subtle);
   }
 
-  /* ── Animations ── */
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(24px); }
     to { opacity: 1; transform: translateY(0); }
@@ -583,15 +674,11 @@
     transform: translateY(0);
   }
 
-  /* ── Responsive ── */
   .mobile-only { display: none; }
   @media (max-width: 768px) {
     nav { padding: 16px 20px; }
     .nav-link { display: none; }
-    
-    .desktop-only-nav {
-    display: none;
-  }
+    .desktop-only-nav { display: none; }
     .cta-card { padding: 40px 24px; }
     footer { flex-direction: column; text-align: center; }
     .features-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
@@ -626,16 +713,6 @@
     }
     .desktop-only { display: none; }
     .mobile-only { display: block; }
-    .screenshot-carousel { 
-      height: 500px;
-      padding: 0 20px;
-    }
-    .carousel-slide {
-      flex: 0 0 280px;
-    }
-    .carousel-slide.active {
-      flex: 0 0 300px;
-    }
   }
 </style>
 </head>
@@ -644,7 +721,6 @@
 <div class="blob blob-1"></div>
 <div class="blob blob-2"></div>
 
-<!-- Nav -->
 <nav>
   <div class="nav-logo">Vocary<span>.</span></div>
   <div style="display:flex;gap:28px;align-items:center;">
@@ -662,7 +738,6 @@
   </div>
 </nav>
 
-<!-- Hero -->
 <section class="hero">
   <div class="hero-badge">
     <div class="badge-dot"></div>
@@ -692,31 +767,38 @@
   </div>
 </section>
 
-<!-- App Screenshot Carousel -->
-<div class="screenshot-carousel">
-  <div class="carousel-track">
-    <div class="carousel-slide active">
-      <img src="6.9-screenshot-1.png" class="carousel-image" alt="Vocary Home Screen">
-    </div>
-    <div class="carousel-slide">
-      <img src="6.9-screenshot-2.png" class="carousel-image" alt="Vocary Add Word">
-    </div>
-    <div class="carousel-slide">
-      <img src="6.9-screenshot-3.png" class="carousel-image" alt="Vocary Practice">
-    </div>
-    <div class="carousel-slide">
-      <img src="6.9-screenshot-4.png" class="carousel-image" alt="Vocary Dictionary">
-    </div>
-    <div class="carousel-slide">
-      <img src="6.9-screenshot-5.png" class="carousel-image" alt="Vocary Word Details">
-    </div>
-    <div class="carousel-slide">
-      <img src="6.9-screenshot-6.png" class="carousel-image" alt="Vocary Profile">
+<div class="carousel-section">
+
+  <div class="carousel-desktop">
+    <div>
+      <div class="wheel-viewport">
+        <div class="wheel-track" id="wheelTrack">
+          <div class="wheel-slide active"><img src="6.9-screenshot-1.png" alt="Vocary Home Screen"></div>
+          <div class="wheel-slide"><img src="6.9-screenshot-2.png" alt="Vocary Add Word"></div>
+          <div class="wheel-slide"><img src="6.9-screenshot-3.png" alt="Vocary Practice"></div>
+          <div class="wheel-slide"><img src="6.9-screenshot-4.png" alt="Vocary Dictionary"></div>
+          <div class="wheel-slide"><img src="6.9-screenshot-5.png" alt="Vocary Word Details"></div>
+          <div class="wheel-slide"><img src="6.9-screenshot-6.png" alt="Vocary Profile"></div>
+        </div>
+      </div>
+      <div class="wheel-nav" id="wheelNav"></div>
     </div>
   </div>
+
+  <div class="carousel-mobile">
+    <div class="snap-scroller" id="snapScroller">
+      <div class="snap-slide active"><img src="6.9-screenshot-1.png" alt="Vocary Home Screen"></div>
+      <div class="snap-slide"><img src="6.9-screenshot-2.png" alt="Vocary Add Word"></div>
+      <div class="snap-slide"><img src="6.9-screenshot-3.png" alt="Vocary Practice"></div>
+      <div class="snap-slide"><img src="6.9-screenshot-4.png" alt="Vocary Dictionary"></div>
+      <div class="snap-slide"><img src="6.9-screenshot-5.png" alt="Vocary Word Details"></div>
+      <div class="snap-slide"><img src="6.9-screenshot-6.png" alt="Vocary Profile"></div>
+    </div>
+    <div class="snap-dots" id="snapDots"></div>
+  </div>
+
 </div>
 
-<!-- Features -->
 <section class="features" id="features">
   <div class="section-label reveal">What makes Vocary different</div>
   <h2 class="section-title reveal">Built for words that <em>stick</em></h2>
@@ -766,7 +848,6 @@
   </div>
 </section>
 
-<!-- How it works -->
 <section class="how" id="how">
   <div class="section-label reveal">Simple by design</div>
   <h2 class="section-title reveal">Three steps to a <em>richer</em> vocabulary</h2>
@@ -796,7 +877,6 @@
   </div>
 </section>
 
-<!-- CTA -->
 <section class="cta" id="download">
   <div class="cta-card reveal">
     <h2 class="cta-title">Start building your vocabulary today</h2>
@@ -813,7 +893,6 @@
   </div>
 </section>
 
-<!-- Footer -->
 <footer>
   <div class="footer-logo">Vocary<span>.</span></div>
   <div class="footer-links">
@@ -826,7 +905,6 @@
 
 <script>
 
-// Scroll reveal
 const reveals = document.querySelectorAll('.reveal');
 
 const observer = new IntersectionObserver((entries) => {
@@ -835,7 +913,6 @@ const observer = new IntersectionObserver((entries) => {
       setTimeout(() => {
         entry.target.classList.add('visible');
       }, i * 60);
-
       observer.unobserve(entry.target);
     }
   });
@@ -844,88 +921,127 @@ const observer = new IntersectionObserver((entries) => {
 reveals.forEach(el => observer.observe(el));
 
 
-// Carousel wheel effect with swipe
-const carouselTrack = document.querySelector('.carousel-track');
-const slides = document.querySelectorAll('.carousel-slide');
-let currentIndex = 0;
-let startX = 0;
-let isDragging = false;
+// DESKTOP WHEEL CAROUSEL
+(function () {
+  const track = document.getElementById('wheelTrack');
+  if (!track) return;
+  const slides = Array.from(track.querySelectorAll('.wheel-slide'));
+  const navWrap = document.getElementById('wheelNav');
+  const SLIDE_W = 220;
+  const GAP = 28;
+  const STEP = SLIDE_W + GAP;
 
-function updateCarousel() {
-  slides.forEach((slide, i) => {
-    slide.classList.remove('active');
+  let current = 0;
+  let dragStartX = 0;
+  let dragOffset = 0;
+  let isDown = false;
+
+  slides.forEach((_, i) => {
+    const dot = document.createElement('button');
+    dot.className = 'wheel-dot' + (i === 0 ? ' active' : '');
+    dot.addEventListener('click', () => goTo(i));
+    navWrap.appendChild(dot);
   });
-  slides[currentIndex].classList.add('active');
-  
-  const offset = -currentIndex * (360 + 20);
-  carouselTrack.style.transform = `translateX(calc(50vw - 180px + ${offset}px))`;
-}
+  const dots = Array.from(navWrap.children);
 
-// Mouse events
-carouselTrack.addEventListener('mousedown', (e) => {
-  isDragging = true;
-  startX = e.clientX;
-  carouselTrack.classList.add('dragging');
-});
+  function render(withTransition) {
+    track.style.transition = withTransition ? 'transform 0.45s cubic-bezier(0.25,0.46,0.45,0.94)' : 'none';
+    const offset = -current * STEP + dragOffset;
+    track.style.transform = `translateX(${offset}px)`;
+    slides.forEach((s, i) => s.classList.toggle('active', i === current));
+    dots.forEach((d, i) => d.classList.toggle('active', i === current));
+  }
 
-document.addEventListener('mousemove', (e) => {
-  if (!isDragging) return;
-  
-  const diff = startX - e.clientX;
-  if (Math.abs(diff) > 50) {
-    if (diff > 0 && currentIndex < slides.length - 1) {
-      currentIndex++;
-      isDragging = false;
-      carouselTrack.classList.remove('dragging');
-      updateCarousel();
-    } else if (diff < 0 && currentIndex > 0) {
-      currentIndex--;
-      isDragging = false;
-      carouselTrack.classList.remove('dragging');
-      updateCarousel();
+  function goTo(index) {
+    current = Math.max(0, Math.min(slides.length - 1, index));
+    dragOffset = 0;
+    render(true);
+  }
+
+  function onPointerDown(e) {
+    isDown = true;
+    track.classList.add('dragging');
+    dragStartX = (e.touches ? e.touches[0].clientX : e.clientX);
+    dragOffset = 0;
+  }
+
+  function onPointerMove(e) {
+    if (!isDown) return;
+    const x = (e.touches ? e.touches[0].clientX : e.clientX);
+    dragOffset = x - dragStartX;
+    render(false);
+  }
+
+  function onPointerUp() {
+    if (!isDown) return;
+    isDown = false;
+    track.classList.remove('dragging');
+    if (Math.abs(dragOffset) > STEP / 4) {
+      if (dragOffset < 0) current = Math.min(slides.length - 1, current + 1);
+      else current = Math.max(0, current - 1);
     }
+    dragOffset = 0;
+    render(true);
   }
-});
 
-document.addEventListener('mouseup', () => {
-  isDragging = false;
-  carouselTrack.classList.remove('dragging');
-});
+  track.addEventListener('mousedown', onPointerDown);
+  window.addEventListener('mousemove', onPointerMove);
+  window.addEventListener('mouseup', onPointerUp);
 
-// Touch events for mobile
-carouselTrack.addEventListener('touchstart', (e) => {
-  startX = e.touches[0].clientX;
-  carouselTrack.classList.add('dragging');
-});
+  track.addEventListener('touchstart', onPointerDown, { passive: true });
+  track.addEventListener('touchmove', onPointerMove, { passive: true });
+  track.addEventListener('touchend', onPointerUp);
 
-carouselTrack.addEventListener('touchmove', (e) => {
-  const diff = startX - e.touches[0].clientX;
-  if (Math.abs(diff) > 50) {
-    if (diff > 0 && currentIndex < slides.length - 1) {
-      currentIndex++;
-      carouselTrack.classList.remove('dragging');
-      updateCarousel();
-    } else if (diff < 0 && currentIndex > 0) {
-      currentIndex--;
-      carouselTrack.classList.remove('dragging');
-      updateCarousel();
-    }
-  }
-});
+  track.querySelectorAll('img').forEach(img => img.addEventListener('dragstart', e => e.preventDefault()));
 
-// Wheel scroll
-carouselTrack.addEventListener('wheel', (e) => {
-  e.preventDefault();
-  if (e.deltaY > 0 && currentIndex < slides.length - 1) {
-    currentIndex++;
-  } else if (e.deltaY < 0 && currentIndex > 0) {
-    currentIndex--;
-  }
-  updateCarousel();
-}, { passive: false });
+  let wheelLock = false;
+  track.closest('.wheel-viewport').addEventListener('wheel', (e) => {
+    if (wheelLock) return;
+    if (Math.abs(e.deltaY) < 10 && Math.abs(e.deltaX) < 10) return;
+    e.preventDefault();
+    wheelLock = true;
+    const dir = (e.deltaY + e.deltaX) > 0 ? 1 : -1;
+    goTo(current + dir);
+    setTimeout(() => { wheelLock = false; }, 350);
+  }, { passive: false });
 
-// Initial setup
-updateCarousel();
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight') goTo(current + 1);
+    if (e.key === 'ArrowLeft') goTo(current - 1);
+  });
+
+  render(false);
+})();
+
+
+// MOBILE SCROLL-SNAP CAROUSEL
+(function () {
+  const scroller = document.getElementById('snapScroller');
+  if (!scroller) return;
+  const slides = Array.from(scroller.querySelectorAll('.snap-slide'));
+  const dotsWrap = document.getElementById('snapDots');
+
+  slides.forEach((_, i) => {
+    const dot = document.createElement('div');
+    dot.className = 'snap-dot' + (i === 0 ? ' active' : '');
+    dotsWrap.appendChild(dot);
+  });
+  const dots = Array.from(dotsWrap.children);
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      const idx = slides.indexOf(entry.target);
+      if (entry.isIntersecting && entry.intersectionRatio > 0.6) {
+        slides.forEach(s => s.classList.remove('active'));
+        dots.forEach(d => d.classList.remove('active'));
+        entry.target.classList.add('active');
+        if (dots[idx]) dots[idx].classList.add('active');
+      }
+    });
+  }, { root: scroller, threshold: [0.6] });
+
+  slides.forEach(s => io.observe(s));
+})();
 
 </script>
 
