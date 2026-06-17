@@ -248,7 +248,7 @@
     width: 100%;
     max-width: 980px;
     margin: 0 auto;
-    height: 460px;
+    height: 575px;
     overflow: hidden;
     -webkit-mask-image: linear-gradient(to right, transparent 0%, black 14%, black 86%, transparent 100%);
     mask-image: linear-gradient(to right, transparent 0%, black 14%, black 86%, transparent 100%);
@@ -258,7 +258,7 @@
     position: absolute;
     top: 0;
     left: 50%;
-    margin-left: -110px;
+    margin-left: -137px;
     height: 100%;
     display: flex;
     align-items: center;
@@ -270,8 +270,8 @@
   .wheel-track.dragging { cursor: grabbing; }
 
   .wheel-slide {
-    flex: 0 0 220px;
-    height: 420px;
+    flex: 0 0 275px;
+    height: 525px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -927,7 +927,7 @@ reveals.forEach(el => observer.observe(el));
   if (!track) return;
   const slides = Array.from(track.querySelectorAll('.wheel-slide'));
   const navWrap = document.getElementById('wheelNav');
-  const SLIDE_W = 220;
+  const SLIDE_W = 275;
   const GAP = 28;
   const STEP = SLIDE_W + GAP;
 
