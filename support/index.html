@@ -2,146 +2,270 @@
 
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Vocary Support</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+<title>Vocary Support</title>
 
-    body {
-      background: #080e1a;
-      color: #ffffff;
-      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 32px;
-    }
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
 
-    .container {
-      width: 100%;
-      max-width: 700px;
-      text-align: center;
-    }
+body{
+    background:#080e1a;
+    color:white;
+    font-family:Inter,system-ui,-apple-system,sans-serif;
+    min-height:100vh;
+    padding:60px 24px;
+}
 
-    .logo {
-      font-size: 40px;
-      font-weight: 800;
-      margin-bottom: 16px;
-    }
+.container{
+    max-width:900px;
+    margin:0 auto;
+}
 
-    .logo span {
-      color: #00c96a;
-    }
+.logo{
+    text-align:center;
+    font-size:42px;
+    font-weight:800;
+    margin-bottom:90px;
+}
 
-    h1 {
-      font-size: 42px;
-      margin-bottom: 16px;
-    }
+.logo span{
+    color:#00c96a;
+}
 
-    p {
-      color: rgba(255,255,255,0.75);
-      line-height: 1.7;
-      margin-bottom: 24px;
-      font-size: 18px;
-    }
+.hero{
+    text-align:center;
+    margin-bottom:50px;
+}
 
-    .card {
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 18px;
-      padding: 28px;
-      margin: 32px 0;
-    }
+.hero h1{
+    font-size:48px;
+    margin-bottom:18px;
+}
 
-    .email {
-      display: inline-block;
-      color: #00c96a;
-      font-size: 20px;
-      font-weight: 600;
-      text-decoration: none;
-      margin-top: 8px;
-    }
+.hero p{
+    color:rgba(255,255,255,0.72);
+    font-size:18px;
+    line-height:1.7;
+    max-width:650px;
+    margin:0 auto;
+}
 
-    .email:hover {
-      opacity: 0.85;
-    }
+.support-card{
+    background:rgba(255,255,255,0.05);
+    border:1px solid rgba(255,255,255,0.08);
+    border-radius:20px;
+    padding:34px;
+    margin-bottom:36px;
+    text-align:center;
+}
 
-    .links {
-      margin-top: 40px;
-      display: flex;
-      justify-content: center;
-      gap: 24px;
-      flex-wrap: wrap;
-    }
+.support-card p{
+    color:rgba(255,255,255,0.72);
+}
 
-    .links a {
-      color: rgba(255,255,255,0.75);
-      text-decoration: none;
-      transition: 0.2s ease;
-    }
+.email{
+    display:inline-block;
+    margin-top:14px;
+    color:#00c96a;
+    font-size:24px;
+    font-weight:700;
+    text-decoration:none;
+}
 
-    .links a:hover {
-      color: #00c96a;
-    }
+.email:hover{
+    opacity:0.85;
+}
 
-    .footer {
-      margin-top: 50px;
-      color: rgba(255,255,255,0.4);
-      font-size: 14px;
-    }
-  </style>
+.response{
+    margin-top:18px;
+}
+
+.section-title{
+    font-size:30px;
+    margin-bottom:20px;
+}
+
+.faq{
+    margin-top:10px;
+}
+
+details{
+    background:rgba(255,255,255,0.05);
+    border:1px solid rgba(255,255,255,0.08);
+    border-radius:14px;
+    margin-bottom:12px;
+    overflow:hidden;
+}
+
+summary{
+    cursor:pointer;
+    padding:20px;
+    font-size:17px;
+    font-weight:600;
+    list-style:none;
+}
+
+summary::-webkit-details-marker{
+    display:none;
+}
+
+summary::after{
+    content:"+";
+    float:right;
+    color:#00c96a;
+    font-size:22px;
+}
+
+details[open] summary::after{
+    content:"−";
+}
+
+.answer{
+    padding:0 20px 20px;
+    color:rgba(255,255,255,0.72);
+    line-height:1.7;
+}
+
+.links{
+    margin-top:60px;
+    display:flex;
+    justify-content:center;
+    gap:28px;
+    flex-wrap:wrap;
+}
+
+.links a{
+    text-decoration:none;
+    color:rgba(255,255,255,0.72);
+}
+
+.links a:hover{
+    color:#00c96a;
+}
+
+.footer{
+    text-align:center;
+    margin-top:50px;
+    color:rgba(255,255,255,0.4);
+    font-size:14px;
+}
+
+.updated{
+    margin-top:8px;
+}
+</style>
 
 </head>
 
 <body>
 
-  <div class="container">
+<div class="container">
 
 ```
-<div class="logo">Vocary<span>.</span></div>
+<div class="logo">
+    Vocary<span>.</span>
+</div>
 
-<h1>Support</h1>
+<div class="hero">
+    <h1>Vocary Support</h1>
 
-<p>
-  Need help with Vocary? Have a bug report, feature suggestion,
-  billing question, or just want to say hello?
-</p>
+    <p>
+        Questions, feedback, bug reports, account issues, or billing enquiries —
+        we're happy to help.
+    </p>
+</div>
 
-<div class="card">
+<div class="support-card">
 
-  <p style="margin-bottom: 10px;">
-    Contact us at
-  </p>
+    <p>Contact us at</p>
 
-  <a class="email" href="mailto:support@getvocary.com">
-    support@getvocary.com
-  </a>
+    <a class="email" href="mailto:support@getvocary.com">
+        support@getvocary.com
+    </a>
 
-  <p style="margin-top:20px;margin-bottom:0;">
-    We aim to respond within 1–2 business days.
-  </p>
+    <p class="response">
+        We aim to respond within 1–2 business days.
+    </p>
+
+</div>
+
+<h2 class="section-title">Frequently Asked Questions</h2>
+
+<div class="faq">
+
+    <details>
+        <summary>I didn't receive my verification email</summary>
+        <div class="answer">
+            First, check your spam, junk, promotions, and updates folders.
+            Verification emails can occasionally be filtered by email providers.
+            If you still can't find it after a few minutes, contact support and we'll help you out.
+        </div>
+    </details>
+
+    <details>
+        <summary>I forgot my password</summary>
+        <div class="answer">
+            Use the "Forgot Password" option on the sign-in screen.
+            If you don't receive the reset email, check your spam folder and make sure you're using the correct email address.
+        </div>
+    </details>
+
+    <details>
+        <summary>My subscription isn't showing as active</summary>
+        <div class="answer">
+            Try closing and reopening the app, then use the "Restore Purchases" option in Settings.
+            If the issue persists, send us a message and include the email associated with your App Store account.
+        </div>
+    </details>
+
+    <details>
+        <summary>I found an incorrect definition or example</summary>
+        <div class="answer">
+            Vocary combines trusted lexical sources with AI-generated educational content.
+            While we work hard to maintain quality, mistakes can occasionally occur.
+            Please email us the word and we'll investigate it.
+        </div>
+    </details>
+
+    <details>
+        <summary>How do I delete my account?</summary>
+        <div class="answer">
+            You can delete your account directly within the app through Settings.
+            This permanently removes your account and associated user data.
+        </div>
+    </details>
+
+    <details>
+        <summary>Can I suggest a feature?</summary>
+        <div class="answer">
+            Absolutely. Many of Vocary's improvements come directly from user feedback.
+            We'd love to hear your ideas.
+        </div>
+    </details>
 
 </div>
 
 <div class="links">
-  <a href="/">Home</a>
-  <a href="/privacy">Privacy Policy</a>
-  <a href="/terms">Terms of Service</a>
+    <a href="/">Home</a>
+    <a href="/privacy">Privacy Policy</a>
+    <a href="/terms">Terms of Service</a>
 </div>
 
 <div class="footer">
-  © 2026 Vocary
+    © 2026 Vocary. All rights reserved.
+    <div class="updated">
+        Last updated: June 2026
+    </div>
 </div>
 ```
 
-  </div>
+</div>
 
 </body>
 </html>
