@@ -232,197 +232,30 @@
 
   .btn-ghost:hover { color: var(--text); }
 
-  /* ── Phone mockup ── */
-  .phone-wrap {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    justify-content: center;
-    padding: 0 24px 100px;
-    animation: fadeUp 0.8s 0.3s ease both;
-  }
+/* Screenshot Carousel */
 
-  .phone-glow {
-    position: absolute;
-    width: 400px;
-    height: 400px;
-    background: radial-gradient(circle, rgba(82,196,104,0.15) 0%, transparent 70%);
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    filter: blur(60px);
-    pointer-events: none;
-  }
+.screenshot-carousel {
+  position: relative;
+  width: 100%;
+  max-width: 340px;
+  height: 700px;
+  margin: 0 auto 100px;
+}
 
-  .phone {
-    width: 280px;
-    background: var(--card);
-    border-radius: 40px;
-    border: 1px solid var(--border);
-    overflow: hidden;
-    box-shadow: 0 60px 120px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.05);
-    position: relative;
-  }
+.carousel-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  opacity: 0;
+  transition: opacity 1s ease;
+  border-radius: 28px;
+}
 
-  .phone-screen {
-    padding: 52px 20px 24px;
-  }
-
-  .phone-eyebrow {
-    font-size: 9px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--subtle);
-    margin-bottom: 2px;
-  }
-
-  .phone-name {
-    font-family: 'Playfair Display', serif;
-    font-size: 32px;
-    font-weight: 700;
-    color: var(--text);
-    letter-spacing: -0.5px;
-    margin-bottom: 16px;
-  }
-
-  .phone-card {
-    background: var(--card2);
-    border-radius: 16px;
-    border: 1px solid var(--border);
-    padding: 14px;
-    margin-bottom: 10px;
-  }
-
-  .phone-card-label {
-    font-size: 9px;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    color: var(--subtle);
-    margin-bottom: 8px;
-  }
-
-  .phone-word-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 6px;
-  }
-
-  .phone-word {
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--text);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .phone-pos {
-    font-size: 9px;
-    background: rgba(255,255,255,0.06);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    padding: 2px 6px;
-    color: var(--muted);
-    font-weight: 400;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
-
-  .phone-badge {
-    font-size: 9px;
-    font-weight: 700;
-    padding: 2px 7px;
-    border-radius: 4px;
-    letter-spacing: 0.8px;
-  }
-
-  .badge-c1 { background: rgba(82,196,104,0.12); color: rgba(82,196,104,0.9); }
-  .badge-b2 { background: rgba(167,139,250,0.12); color: rgba(167,139,250,0.9); }
-  .badge-new { background: rgba(96,165,250,0.12); color: rgba(96,165,250,0.9); border-radius: 20px; }
-
-  .phone-def {
-    font-size: 11px;
-    color: var(--muted);
-    line-height: 1.5;
-  }
-
-  .phone-progress-row {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-top: 8px;
-  }
-
-  .phone-progress-bar {
-    flex: 1;
-    height: 2px;
-    background: rgba(255,255,255,0.08);
-    border-radius: 1px;
-    overflow: hidden;
-  }
-
-  .phone-progress-fill {
-    height: 100%;
-    background: var(--green);
-    border-radius: 1px;
-  }
-
-  .phone-progress-label {
-    font-size: 9px;
-    color: var(--subtle);
-  }
-
-  .phone-wotd {
-    background: linear-gradient(135deg, rgba(82,196,104,0.1) 0%, rgba(82,196,104,0.04) 100%);
-    border: 1px solid var(--green-border);
-    border-radius: 14px;
-    padding: 14px;
-    margin-bottom: 10px;
-  }
-
-  .phone-wotd-label {
-    font-size: 9px;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    color: rgba(82,196,104,0.6);
-    margin-bottom: 6px;
-  }
-
-  .phone-wotd-word {
-    font-family: 'Playfair Display', serif;
-    font-size: 20px;
-    font-weight: 700;
-    color: var(--text);
-    margin-bottom: 4px;
-  }
-
-  .phone-wotd-def {
-    font-size: 10px;
-    color: var(--muted);
-    line-height: 1.5;
-  }
-
-  .phone-tab-bar {
-    display: flex;
-    justify-content: space-around;
-    padding: 12px 0 20px;
-    border-top: 1px solid var(--border);
-    background: rgba(13,20,33,0.95);
-  }
-
-  .tab-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 3px;
-    font-size: 9px;
-    color: var(--subtle);
-  }
-
-  .tab-item.active { color: var(--green); }
-
-  .tab-icon { font-size: 16px; }
+.carousel-image.active {
+  opacity: 1;
+}
 
   /* ── Features ── */
   .features {
@@ -817,56 +650,17 @@
   </div>
 </section>
 
-<!-- Phone mockup -->
-<div class="phone-wrap">
-  <div class="phone-glow"></div>
-  <div class="phone">
-    <div class="phone-screen">
-      <div class="phone-eyebrow">Welcome back</div>
-      <div class="phone-name">Ben</div>
+ <!-- App Screenshot Carousel -->
 
-      <!-- WOTD card -->
-      <div class="phone-wotd">
-        <div class="phone-wotd-label">Word of the Day · Society</div>
-        <div class="phone-wotd-word">Ephemeral</div>
-        <div class="phone-wotd-def">Lasting for only a short time; transitory. Things of beauty that are brief and fleeting.</div>
-      </div>
+<div class="screenshot-carousel">
 
-      <!-- Word cards -->
-      <div class="phone-card">
-        <div class="phone-card-label">My Words · 3 to practice</div>
+  <img src="6.9-screenshot-1.png" class="carousel-image active">
+  <img src="6.9-screenshot-2.png" class="carousel-image">
+  <img src="6.9-screenshot-3.png" class="carousel-image">
+  <img src="6.9-screenshot-4.png" class="carousel-image">
+  <img src="6.9-screenshot-5.png" class="carousel-image">
+  <img src="6.9-screenshot-6.png" class="carousel-image">
 
-        <div class="phone-word-row">
-          <div class="phone-word">
-            Serendipity
-            <span class="phone-pos">noun</span>
-          </div>
-          <span class="phone-badge badge-c1">C1</span>
-        </div>
-        <div class="phone-def">The occurrence of happy events by chance.</div>
-        <div class="phone-progress-row">
-          <div class="phone-progress-bar"><div class="phone-progress-fill" style="width:60%"></div></div>
-          <span class="phone-progress-label">Learning</span>
-        </div>
-      </div>
-
-      <div class="phone-card" style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0;">
-        <div>
-          <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:2px;">Learn Your Words</div>
-          <div style="font-size:11px;color:var(--muted);">Begin today's practice</div>
-        </div>
-        <div style="width:36px;height:36px;background:var(--green-dim);border:1px solid var(--green-border);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--green);font-weight:700;">4</div>
-      </div>
-    </div>
-
-    <div class="phone-tab-bar">
-      <div class="tab-item active"><div class="tab-icon">⌂</div><div>Home</div></div>
-      <div class="tab-item"><div class="tab-icon">📖</div><div>My Words</div></div>
-      <div class="tab-item"><div class="tab-icon">◎</div><div>Discover</div></div>
-      <div class="tab-item"><div class="tab-icon">⬡</div><div>Leaderboard</div></div>
-      <div class="tab-item"><div class="tab-icon">◯</div><div>Profile</div></div>
-    </div>
-  </div>
 </div>
 
 <!-- Features -->
@@ -978,20 +772,41 @@
 </footer>
 
 <script>
-  // Scroll reveal
-  const reveals = document.querySelectorAll('.reveal');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry, i) => {
-      if (entry.isIntersecting) {
-        setTimeout(() => {
-          entry.target.classList.add('visible');
-        }, i * 60);
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.1 });
 
-  reveals.forEach(el => observer.observe(el));
+// Scroll reveal
+const reveals = document.querySelectorAll('.reveal');
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      setTimeout(() => {
+        entry.target.classList.add('visible');
+      }, i * 60);
+
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1 });
+
+reveals.forEach(el => observer.observe(el));
+
+
+// Screenshot carousel
+const screenshots = document.querySelectorAll('.carousel-image');
+
+let currentScreenshot = 0;
+
+setInterval(() => {
+
+  screenshots[currentScreenshot].classList.remove('active');
+
+  currentScreenshot =
+    (currentScreenshot + 1) % screenshots.length;
+
+  screenshots[currentScreenshot].classList.add('active');
+
+}, 4500);
+
 </script>
 
 </body>
