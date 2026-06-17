@@ -723,6 +723,10 @@
   @media (max-width: 768px) {
     nav { padding: 16px 20px; }
     .nav-link { display: none; }
+    
+    .desktop-only-nav {
+    display: none;
+  }
     .cta-card { padding: 40px 24px; }
     footer { flex-direction: column; text-align: center; }
     .features-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
@@ -771,9 +775,9 @@
   <div style="display:flex;gap:28px;align-items:center;">
     <a href="#features" class="nav-link">Features</a>
     <a href="#how" class="nav-link">How it works</a>
-    <a href="/privacy" class="footer-link">Privacy Policy</a>
-    <a href="/terms" class="footer-link">Terms</a>
-    <a href="/support" class="footer-link">Support</a>
+    <a href="/privacy" class="footer-link desktop-only-nav">Privacy Policy</a>
+    <a href="/terms" class="footer-link desktop-only-nav">Terms</a>
+    <a href="/support" class="footer-link desktop-only-nav">Support</a>
     <a href="#download" class="nav-cta">
       Download
       <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
